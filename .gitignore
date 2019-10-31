@@ -43,4 +43,10 @@ target/
 # python
 *.cpython-36.pyc
 compiled_krb
+<<<<<<< HEAD
 venv/
+*.jpg
+*.h5
+=======
+venv/
+>>>>>>> parent of 9c1e6f5... 预科
