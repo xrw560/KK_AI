@@ -25,9 +25,12 @@ def show_fashion_mnist(images, labels):
 
 
 if __name__ == "__main__":
-    mnist_train = torchvision.datasets.FashionMNIST(root='F:/data/pytorch_data/FashionMNIST', train=True, download=True,
+    import utils
+    root = utils.get_fashion_mnist_path()
+    print(root)
+    mnist_train = torchvision.datasets.FashionMNIST(root=root, train=True, download=True,
                                                     transform=transforms.ToTensor())
-    mnist_test = torchvision.datasets.FashionMNIST(root='F:/data/pytorch_data/FashionMNIST', train=False, download=True,
+    mnist_test = torchvision.datasets.FashionMNIST(root=root, train=False, download=True,
                                                    transform=transforms.ToTensor())
     print(type(mnist_train))
     print(len(mnist_train), len(mnist_test))
