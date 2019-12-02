@@ -100,8 +100,12 @@ class FCN32s(nn.Module):
 
 
 if __name__ == "__main__":
-    x = torch.randn((10, 3, 256, 256))
+    X = torch.randn((1, 3, 256, 256))
     model = FCN32s()
-    model.eval()
-    y = model(x)
-    print(y.size())
+
+    for name, blk in model.named_children():
+        X = blk(X)
+        print(name, "output shape:", X.shape)
+
+    # y = model(x)
+    # print(y.size())
