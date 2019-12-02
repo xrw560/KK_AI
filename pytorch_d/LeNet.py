@@ -83,5 +83,9 @@ if __name__ == '__main__':
     train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size=batch_size, root="F:/data/pytorch_data/FashionMNIST")
 
     net = LeNet()
-    optimizer = torch.optim.Adam(net.parameters(), lr=lr)
-    train_ch5(net, train_iter, test_iter, batch_size, optimizer, device, num_epochs)
+
+    X = torch.ones((1, 1, 28, 28))
+    y = net(X)
+
+    # optimizer = torch.optim.Adam(net.parameters(), lr=lr)
+    # train_ch5(net, train_iter, test_iter, batch_size, optimizer, device, num_epochs)
