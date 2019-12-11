@@ -1,5 +1,7 @@
 import torch
 import torch.nn as nn
+from tensorboardX import SummaryWriter
+from torchviz import make_dot
 
 
 class FCN32s(nn.Module):
@@ -102,10 +104,18 @@ class FCN32s(nn.Module):
 if __name__ == "__main__":
     X = torch.randn((1, 3, 256, 256))
     model = FCN32s()
+    print(model)
+    from torchsummaryX import summary
 
-    for name, blk in model.named_children():
-        X = blk(X)
-        print(name, "output shape:", X.shape)
+    summary(model, X)
+    # with SummaryWriter(comment='fcn32s') as w:
+    #     w.add_graph(model, input_to_model=X)
+
+    # vis_graph = make_dot(model(X), params=dict(model.named_parameters()))
+    # vis_graph.view()
+    # for name, blk in model.named_children():
+    #     X = blk(X)
+    #     print(name, "output shape:", X.shape)
 
     # y = model(x)
     # print(y.size())
