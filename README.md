@@ -16,6 +16,15 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "2"
 import torch
 torch.cuda.set_device(id)
 ```
+## 查看nvidia状态
+```shell
+watch -n 10 nvidia-smi
+```
 
 
+## 设置pandas显示不换行
+```python
+import pandas as pd
 
+pd.set_option('display.width', 1000)
+```
