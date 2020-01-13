@@ -1,15 +1,19 @@
-import math
 import torch.nn as nn
 import torch.nn.functional as F
-import torch.utils.model_zoo as model_zoo
-from torch.nn import init
 import torch
+import pandas as pd
+
+pd.set_option('display.width', 1000)
 
 
 class SeparableConv2d(nn.Module):
+    """深度可分离卷积"""
+
     def __init__(self, in_channels, out_channels, k=1, s=1, p=0):
         super(SeparableConv2d, self).__init__()
+        # depth-wise
         self.conv1 = nn.Conv2d(in_channels, in_channels, k, s, p, groups=in_channels, bias=False)
+        # point-wise
         self.pointwise = nn.Conv2d(in_channels, out_channels, 1, 1, 0, 1, 1, bias=False)
 
     def forward(self, x):
@@ -31,6 +35,8 @@ class SepConvBlock(nn.Module):
 
 
 class Block(nn.Module):
+    """常规"""
+
     def __init__(self, channel):
         super(Block, self).__init__()
         self.sepconv1 = SepConvBlock(channel, channel, k=3, s=1, p=1)
@@ -64,8 +70,8 @@ class DownBlock(nn.Module):
 class Xception(nn.Module):
     def __init__(self, n_classes=10):
         super(Xception, self).__init__()
-        self.conv1 = nn.Conv2d(3, 32, kernel_size=3, stride=2, padding=0, bias=False)
-        self.bn1 = nn.BatchNorm2d(32)
+        self.conv1 = nn.Conv2d(in_channels=3, out_channels=32, kernel_size=3, stride=2, padding=0, bias=False)
+        self.bn1 = nn.BatchNorm2d(num_features=32)
         self.relu1 = nn.ReLU(inplace=True)
 
         self.conv2 = nn.Conv2d(in_channels=32, out_channels=64, kernel_size=3, padding=1, bias=False)

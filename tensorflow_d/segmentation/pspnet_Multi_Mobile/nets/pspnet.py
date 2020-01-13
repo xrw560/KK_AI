@@ -1,9 +1,8 @@
-from keras.models import *
-from keras.layers import *
+from tensorflow.keras.models import *
+from tensorflow.keras.layers import *
 from nets.mobilenet import get_mobilenet_encoder
 import numpy as np
-
-from keras_segmentation.models.model_utils import get_segmentation_model
+import tensorflow.keras.backend as K
 
 IMAGE_ORDERING = 'channels_last'
 MERGE_AXIS = -1
@@ -13,7 +12,7 @@ def resize_image(inp, s, data_format):
     import tensorflow as tf
 
     return Lambda(
-        lambda x: tf.image.resize_images(
+        lambda x: tf.image.resize(
             x, (K.int_shape(x)[1] * s[0], K.int_shape(x)[2] * s[1]))
     )(inp)
 

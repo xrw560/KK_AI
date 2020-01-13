@@ -1,7 +1,8 @@
-from keras.models import *
-from keras.layers import *
+from tensorflow.keras.models import *
+from tensorflow.keras.layers import *
 from nets.mobilenet import get_mobilenet_encoder
 import numpy as np
+import tensorflow.keras.backend as K
 
 IMAGE_ORDERING = 'channels_last'
 MERGE_AXIS = -1
