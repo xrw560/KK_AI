@@ -7,8 +7,8 @@ import d2lzh_pytorch as d2l
 
 torch.set_default_tensor_type(torch.FloatTensor)
 
-train_data = pd.read_csv(r"F:\data\housing\train.csv")
-test_data = pd.read_csv(r"F:\data\housing\test.csv")
+train_data = pd.read_csv(r"C:\Users\Administrator\Desktop\train.csv")
+test_data = pd.read_csv(r"C:\Users\Administrator\Desktop\test.csv")
 all_features = pd.concat((train_data.iloc[:, 1:-1], test_data.iloc[:, 1:]))
 number_features = all_features.dtypes[all_features.dtypes != 'object'].index
 all_features[number_features] = all_features[number_features].apply(lambda x: (x - x.mean()) / x.std())
@@ -93,7 +93,7 @@ def k_fold(k, X_train, y_train, num_epochs,
     return train_l_sum / k, valid_l_sum / k
 
 
-k, num_epochs, lr, weight_decay, batch_size = 5, 100, 5, 0, 64
+k, num_epochs, lr, weight_decay, batch_size = 5, 1000, 5, 0, 64
 train_l, valid_l = k_fold(k, train_features, train_labels, num_epochs, lr, weight_decay, batch_size)
 print('%d-fold validation: avg train rmse %f, avg valid rmse %f' % (k, train_l, valid_l))
 
