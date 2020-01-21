@@ -1,12 +1,7 @@
-import warnings
-import numpy as np
-
-from keras.preprocessing import image
-from keras.models import Model
-from keras.layers import DepthwiseConv2D, Activation, Input, Dropout, Reshape, BatchNormalization, \
-    GlobalAveragePooling2D, GlobalMaxPooling2D, Conv2D
-from keras.applications.imagenet_utils import decode_predictions
-import keras.backend as K
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import DepthwiseConv2D, Activation, Input, Dropout, Reshape, BatchNormalization, \
+    GlobalAveragePooling2D, Conv2D
+import tensorflow.keras.backend as K
 
 
 def relu6(x):
