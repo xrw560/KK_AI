@@ -12,7 +12,7 @@ def resize_image(inp, s, data_format):
     import tensorflow as tf
 
     return Lambda(
-        lambda x: tf.image.resize_images(
+        lambda x: tf.image.resize(
             x, (K.int_shape(x)[1] * s[0], K.int_shape(x)[2] * s[1]))
     )(inp)
 
@@ -21,7 +21,7 @@ def pool_block(feats, pool_factor):
     if IMAGE_ORDERING == 'channels_first':
         h = K.int_shape(feats)[2]
         w = K.int_shape(feats)[3]
-    elif IMAGE_ORDERING == 'channels_last':
+    elif IMAGE_ORDERING == 'channels_last':  # 默认
         h = K.int_shape(feats)[1]
         w = K.int_shape(feats)[2]
 
@@ -36,7 +36,7 @@ def pool_block(feats, pool_factor):
     x = BatchNormalization()(x)
     x = Activation('relu')(x)
 
-    x = resize_image(x, strides, data_format=IMAGE_ORDERING)
+    x = resize_image(x, strides, data_format=IMAGE_ORDERING)  # 18x18x512
 
     return x
 
@@ -48,27 +48,29 @@ def _pspnet(n_classes, encoder, input_height=384, input_width=576):
     img_input, levels = encoder(input_height=input_height, input_width=input_width)
     [f1, f2, f3, f4, f5] = levels
 
-    o = f5
+    o = f5  # 取第5个特征层
 
     # 对f5进行不同程度的池化
     pool_factors = [1, 2, 3, 6]
-    pool_outs = [o]
+    pool_outs = [o]  # 18x18x1024
 
     for p in pool_factors:
         pooled = pool_block(o, p)
         pool_outs.append(pooled)
 
     # 连接
+    # 18x18x3072
     o = Concatenate(axis=MERGE_AXIS)(pool_outs)
 
     # 卷积
+    # 18x18x512
     o = Conv2D(512, (1, 1), data_format=IMAGE_ORDERING, use_bias=False)(o)
     o = BatchNormalization()(o)
     o = Activation('relu')(o)
 
-    # 此时输出为[144,144,nclasses]
-    o = Conv2D(n_classes, (3, 3), data_format=IMAGE_ORDERING, padding='same')(o)
-    o = resize_image(o, (8, 8), data_format=IMAGE_ORDERING)
+    # 此时输出为
+    o = Conv2D(n_classes, (3, 3), data_format=IMAGE_ORDERING, padding='same')(o)  # 18x18xnclasses
+    o = resize_image(o, (8, 8), data_format=IMAGE_ORDERING)  # [144,144,nclasses]
     o = Reshape((-1, n_classes))(o)
     o = Softmax()(o)
     model = Model(img_input, o)
