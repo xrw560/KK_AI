@@ -4,24 +4,24 @@ from __future__ import print_function
 
 import tensorflow as tf
 
-from keras.models import Model
-from keras import layers
-from keras.layers import Input
-from keras.layers import Lambda
-from keras.layers import Activation
-from keras.layers import Softmax, Reshape
-from keras.layers import Concatenate
-from keras.layers import Add
-from keras.layers import Dropout
-from keras.layers import BatchNormalization
-from keras.layers import Conv2D
-from keras.layers import DepthwiseConv2D
-from keras.layers import ZeroPadding2D
-from keras.layers import GlobalAveragePooling2D
-from keras.utils.data_utils import get_file
-from keras import backend as K
-from keras.activations import relu
-from keras.applications.imagenet_utils import preprocess_input
+from tensorflow.keras.models import Model
+from tensorflow.keras import layers
+from tensorflow.keras.layers import Input
+from tensorflow.keras.layers import Lambda
+from tensorflow.keras.layers import Activation
+from tensorflow.keras.layers import Softmax, Reshape
+from tensorflow.keras.layers import Concatenate
+from tensorflow.keras.layers import Add
+from tensorflow.keras.layers import Dropout
+from tensorflow.keras.layers import BatchNormalization
+from tensorflow.keras.layers import Conv2D
+from tensorflow.keras.layers import DepthwiseConv2D
+from tensorflow.keras.layers import ZeroPadding2D
+from tensorflow.keras.layers import GlobalAveragePooling2D
+from tensorflow.keras.utils import get_file
+from tensorflow.keras import backend as K
+from tensorflow.keras.activations import relu
+from tensorflow.keras.applications.imagenet_utils import preprocess_input
 from nets.mobilenetV2 import mobilenetV2
 
 

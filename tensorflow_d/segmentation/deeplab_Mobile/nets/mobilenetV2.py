@@ -1,17 +1,17 @@
-from keras.models import Model
-from keras import layers
-from keras.layers import Input
-from keras.layers import Lambda
-from keras.layers import Activation
-from keras.layers import Concatenate
-from keras.layers import Add
-from keras.layers import Dropout
-from keras.layers import BatchNormalization
-from keras.layers import Conv2D
-from keras.layers import DepthwiseConv2D
-from keras.layers import ZeroPadding2D
-from keras.layers import GlobalAveragePooling2D
-from keras.activations import relu
+from tensorflow.keras.models import Model
+from tensorflow.keras import layers
+from tensorflow.keras.layers import Input
+from tensorflow.keras.layers import Lambda
+from tensorflow.keras.layers import Activation
+from tensorflow.keras.layers import Concatenate
+from tensorflow.keras.layers import Add
+from tensorflow.keras.layers import Dropout
+from tensorflow.keras.layers import BatchNormalization
+from tensorflow.keras.layers import Conv2D
+from tensorflow.keras.layers import DepthwiseConv2D
+from tensorflow.keras.layers import ZeroPadding2D
+from tensorflow.keras.layers import GlobalAveragePooling2D
+from tensorflow.keras.activations import relu
 
 
 def _make_divisible(v, divisor, min_value=None):
@@ -76,8 +76,7 @@ def mobilenetV2(inputs, alpha=1):
                kernel_size=3,
                strides=(2, 2), padding='same',
                use_bias=False, name='Conv')(inputs)
-    x = BatchNormalization(
-        epsilon=1e-3, momentum=0.999, name='Conv_BN')(x)
+    x = BatchNormalization(epsilon=1e-3, momentum=0.999, name='Conv_BN')(x)
     x = Activation(relu6, name='Conv_Relu6')(x)
 
     x = _inverted_res_block(x, filters=16, alpha=alpha, stride=1,
